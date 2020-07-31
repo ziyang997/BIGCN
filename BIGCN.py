@@ -257,7 +257,7 @@ class LightGCN(object):
         ego_embeddings = tf.concat([self.weights['user_embedding'], self.weights['item_embedding']], axis=0)
         all_embeddings = [ego_embeddings]
         A = self.norm_adj.todense()
-        mask = -10e8 * (1.0 - A)
+        mask = -10e9 * (1.0 - A)
         mask = mask + A
         scaled_dim = np.sqrt(self.emb_dim)
         for k in range(0, self.n_layers):
