@@ -174,8 +174,8 @@ class LightGCN(object):
             all_weights['item_embedding'] = tf.Variable(initializer([self.n_items, self.emb_dim]), name='item_embedding')
             for h in range(self.K_num):
 
-                all_weights['K_embedding_%d' %h] = tf.Variable(initializer([self.emb_dim, self.em_dim]), name='K_embedding_%d' %h)
-                all_weights['Q_embedding_%d' %h] = tf.Variable(initializer([self.emb_dim, self.em_dim]), name='Q_embedding_%d' %h)
+                all_weights['K_embedding_%d' %h] = tf.Variable(initializer([self.emb_dim, self.emb_dim]), name='K_embedding_%d' %h)
+                all_weights['Q_embedding_%d' %h] = tf.Variable(initializer([self.emb_dim, self.emb_dim]), name='Q_embedding_%d' %h)
 
 
             print('using xavier initialization')
