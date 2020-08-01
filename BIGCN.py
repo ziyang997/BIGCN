@@ -259,16 +259,17 @@ class LightGCN(object):
         u_g_embeddings, i_g_embeddings = tf.split(all_embeddings, [self.n_users, self.n_items], 0)
         return u_g_embeddings, i_g_embeddings
     def _create_bigcn_embed(self):
-        ego_embeddings = tf.concat([self.weights['user_embedding'], self.weights['item_embedding']], axis=0)
-        all_embeddings = [ego_embeddings]
+        
         multi_embeddings = []
         A = self.norm_adj.todense()
         mask = -10e9 * (1.0 - A)
         mask = mask + A
         scaled_dim = np.sqrt(self.emb_dim)
         for h in range(self.K_num):
-
+            ego_embeddings = tf.concat([self.weights['user_embedding'], self.weights['item_embedding']], axis=0)
+            all_embeddings = [ego_embeddings]
             for k in range(0, self.n_layers):
+                
                 ego_embeddings_q = tf.matmul(ego_embeddings, self.weights['Q_embedding_%d' % h])
                 ego_embeddings_k = tf.matmul(ego_embeddings, self.weights['K_embedding_%d' % h])
                 scores = tf.matmul(ego_embeddings_q, ego_embeddings_k, transpose_b=True) / scaled_dim + mask
@@ -281,6 +282,7 @@ class LightGCN(object):
         multi_embeddings = tf.concat(multi_embeddings, axis=1)
         u_g_embeddings, i_g_embeddings = tf.split(multi_embeddings, [self.n_users, self.n_items], 0)
         return u_g_embeddings, i_g_embeddings
+
 
 
 
