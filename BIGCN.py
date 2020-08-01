@@ -269,8 +269,8 @@ class LightGCN(object):
         for h in range(self.K_num):
 
             for k in range(0, self.n_layers):
-                ego_embeddings_q = tf.matmul(ego_embeddings, self.weight_size['Q_embedding_%d' % h])
-                ego_embeddings_k = tf.matmul(ego_embeddings, self.weight_size['K_embedding_%d' % h])
+                ego_embeddings_q = tf.matmul(ego_embeddings, self.weights['Q_embedding_%d' % h])
+                ego_embeddings_k = tf.matmul(ego_embeddings, self.weights['K_embedding_%d' % h])
                 scores = tf.matmul(ego_embeddings_q, ego_embeddings_k, transpose_b=True) / scaled_dim + mask
                 distribution = tf.nn.softmax(scores)
                 ego_embeddings = tf.matmul(distribution, ego_embeddings) + tf.square(tf.matmul(distribution, ego_embeddings))
